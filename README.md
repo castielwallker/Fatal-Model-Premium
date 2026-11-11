@@ -1,76 +1,100 @@
-# Fatal Model Premium
+<div align="center">
 
-### Descrição
-O **Fatal Model Premium** é um UserScript desenvolvido para o Tampermonkey, que facilita a navegação no site [Fatal Model](https://fatalmodel.com/) ao:
-- **Remover anúncios** e banners indesejados.
-- **Eliminar efeitos de blur** em perfis e imagens.
-- **Desbloquear perfis censurados** automaticamente.
-- **Monitorar mudanças no DOM** para aplicar as funções sempre que necessário.
+# 🎭 Fatal Model Premium
 
----
+**UserScript para Tampermonkey que limpa anúncios, remove blur, desbloqueia reviews e adiciona botões de download de mídia no Fatal Model.**
 
-## Funcionalidades
-- **Remoção automática de anúncios e banners**.
-- **Desbloqueio de perfis** com restrição.
-- **Adição de botões de download** para mídias.
-- **Eliminação do blur** de conteúdos restritos.
-- **Aplicação automática das funções** a cada alteração no site.
+![versão](https://img.shields.io/badge/vers%C3%A3o-2.6-blue)
+![Tampermonkey](https://img.shields.io/badge/Tampermonkey-required-green)
+![licença](https://img.shields.io/badge/licen%C3%A7a-MIT-yellow)
+![status](https://img.shields.io/badge/status-ativo-brightgreen)
+
+</div>
 
 ---
 
-## Pré-requisitos
-- **Navegador com suporte a Tampermonkey** (Chrome, Firefox, Edge, etc.).
-- **Extensão Tampermonkey** instalada.
+## 📖 Sobre
+
+**Fatal Model Premium** é um UserScript que roda no **Tampermonkey** e melhora a experiência de navegação no site `fatalmodel.com`, removendo elementos de upsell/premium, eliminando efeitos de blur em mídias e reviews, e adicionando botões circulares de download nas imagens e vídeos.
+
+O script é **não invasivo**: usa CSS injection + `MutationObserver` para reagir a mudanças no DOM, e **ignora a página de galeria** (`/galeria`) para evitar quebrar a navegação.
+
+> ⚠️ **Aviso:** este projeto é para fins educacionais e de uso pessoal. Respeite os Termos de Serviço do site e direitos autorais do conteúdo. O autor não se responsabiliza pelo uso indevido.
 
 ---
 
-## Instalação
+## ✨ Funcionalidades
 
-### 1. Instalar Tampermonkey
-1. Acesse o site oficial: [https://www.tampermonkey.net/](https://www.tampermonkey.net/).
-2. Escolha a versão para o seu navegador e instale.
-3. Após a instalação, ative a extensão no navegador.
-
-### 2. Adicionar o Script
-1. Clique no ícone do **Tampermonkey** na barra de ferramentas do navegador.
-2. Selecione a opção **"Create a new script"**.
-3. Substitua o conteúdo da área de edição pelo código disponível no repositório.
-4. **Salve o script** clicando em **File -> Save** ou pressionando `Ctrl + S`.
-
----
-
-## Como Usar
-
-1. **Acesse o site**: [Fatal Model](https://fatalmodel.com/).
-
-### Bloqueio de anúncios:
-- Todos os **anúncios e banners** são removidos automaticamente ao carregar a página.
-
-### Desbloqueio de perfis censurados:
-- Perfis marcados como **"não permitido"** são **desbloqueados automaticamente**.
-
-### Remoção do blur:
-- Imagens e vídeos restritos não terão **efeito de blur**.
-
-### Atualizações automáticas:
-- Toda vez que o conteúdo da página muda, o **script é reativado automaticamente** para aplicar todas as funcionalidades.
+| Recurso | Descrição |
+|---|---|
+| 🚫 **Bloqueio de anúncios** | Remove banners, `publicity`, `upsell`, `conversion-modal` e blocos de texto promocional do Premium |
+| 🖼️ **Remoção de blur** | Elimina `filter: blur()` de imagens, vídeos e classes `[class*="blur"]` |
+| 🔓 **Reviews desbloqueadas** | Remove `max-height`, `overflow: hidden` e filtros de containers de review |
+| ⬇️ **Botões de download** | Adiciona botão circular animado em cada `img`/`video` (fora da galeria) |
+| 🔄 **Reaplicação automática** | `MutationObserver` + interval de 2,5s mantêm o site limpo em SPAs |
+| 🧭 **Navegação SPA-aware** | Reaplica em `pushState`, `replaceState` e `popstate` |
+| 🎨 **Painel flutuante** | Botões "baixar mídias", "limpar" e "x" no canto inferior esquerdo |
+| 🛡️ **Modo galeria seguro** | Na rota `/galeria` o script não mexe no DOM (só CSS) |
 
 ---
 
-## Personalização
+## 🚀 Instalação
 
-### Bloqueio de novos elementos:
-- Adicione classes CSS de elementos indesejados ao **array `classesToBlock`** para removê-los automaticamente.
+### Opção 1 — Instalação direta (recomendada)
 
-### Estilo dos botões:
-- Modifique o **CSS na função que cria os botões** para personalizar cor, posição ou tamanho.
+1. Instale o [Tampermonkey](https://www.tampermonkey.net/) no seu navegador.
+2. Abra o arquivo [`fatal.js`](./fatal.js) neste repositório.
+3. Clique em **Raw** e o Tampermonkey oferecerá a instalação automaticamente.
+4. Confirme em **Instalar**.
+
+### Opção 2 — Manual
+
+1. Instale o Tampermonkey.
+2. Clique no ícone da extensão → **Create a new script**.
+3. Apague o conteúdo padrão e cole todo o código de [`fatal.js`](./fatal.js).
+4. Salve com `Ctrl + S`.
+5. Acesse [fatalmodel.com](https://fatalmodel.com/) — o script roda automaticamente.
 
 ---
 
-## Contribuição
-- Sinta-se à vontade para enviar **pull requests** ou abrir **issues** para sugestões ou correções.
+## 🎮 Como usar
+
+Depois de instalar, basta navegar normalmente:
+
+- **Anúncios/banners** somem sozinhos ao carregar a página.
+- **Mídias** ganham um botão azul circular (canto inferior direito) para download.
+- **Reviews** e **conteúdo premium** ficam visíveis sem blur.
+- O **painel flutuante** (canto inferior esquerdo) permite:
+  - `baixar mídias` → baixa todas as imagens/vídeos da página
+  - `limpar` → reaplica todas as limpezas manualmente
+  - `x` → fecha o painel
+
+> ℹ️ Na página `/galeria` os botões de download **não** são injetados (proteção intencional).
 
 ---
 
-## Licença
-Este projeto é licenciado sob a **MIT License**.
+## ⚙️ Como funciona (resumo técnico)
+
+- **Injeção de CSS** (`GM_addStyle`) para blur, anúncios e animação dos botões.
+- **Arrays de configuração**:
+  - `CLASSES_TO_HIDE` — classes CSS de anúncios/upsell a remover
+  - `AD_TEXT_RE` — regex para detectar blocos de texto promocional
+- **`hideElementOrKeepMedia(el)`** — se o elemento contém mídia, esconde só os filhos não-mídia; senão, esconde o elemento inteiro.
+- **`inGallery()`** — guard que bloqueia mutação de DOM na rota de galeria.
+- **`MutationObserver` + setInterval(2500)** — mantém o site limpo após navegação SPA.
+- **`safeGmDownload()`** — usa `GM_download` quando disponível, com fallback para `<a download>`.
+
+---
+
+## 🎨 Personalização
+
+### Adicionar novas classes para bloquear
+
+Edite o array `CLASSES_TO_HIDE` no topo do script:
+
+```js
+const CLASSES_TO_HIDE = [
+    'publicity', 'embed-publicity', 'alert-premium-media',
+    // adicione a sua classe aqui:
+    'minha-classe-nova'
+];
